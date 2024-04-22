@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to the Dashboard</h1>
+  <h2>List of Complaints</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Complaint ID</th>
+        <th>Staff Number</th>
+        <th>Department</th>
+        <th>Internal Phone</th>
+        <th>Issue</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Actions</th> <!-- New column for editing status -->
+      </tr>
+    </thead>
+    <tbody>
+      <% complaints.forEach(complaint => { %>
+        <tr>
+          <td><%= complaint.complaintId %></td>
+          <td><%= complaint.staffNumber %></td>
+          <td><%= complaint.department %></td>
+          <td><%= complaint.internalPhone %></td>
+          <td><%= complaint.issue %></td>
+          <td>
+            <!-- Display current status -->
+            <%= complaint.status %>
+          </td>
+          <td><%= complaint.date.toLocaleString() %></td>
+          <td>
+            <!-- Form to edit status -->
+            <form action="/edit-status/<%= complaint.complaintId %>" method="post">
+              <select name="status">
+                <option value="yet to be resolved">Yet to be resolved</option>
+                <option value="resolved">Resolved</option>
+                <!-- Add more options as needed -->
+              </select>
+              <button type="submit">Update</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</body>
+</html>
